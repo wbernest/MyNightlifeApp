@@ -23,7 +23,7 @@ import footer from '../components/footer/footer.component';
 import main from './main/main.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
-
+import banner from './banner/banner.directive'
 
 
 import './app.scss';
@@ -45,7 +45,7 @@ angular.module('myNightlifeAppApp', [
   footer,
   main,
   constants,
-
+  banner,
   util
 ])
   .config(routeConfig)
