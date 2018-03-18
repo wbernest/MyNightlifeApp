@@ -9,6 +9,7 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/UserLocations', require('./api/UserLocation'));
   app.use('/api/yelps', require('./api/yelp'));
   app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

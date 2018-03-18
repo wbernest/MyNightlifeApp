@@ -24,7 +24,7 @@
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <button class="btn btn-link" ng-click="$ctrl.accordionClick($index)">
-                  {{result.name}}</button><span class="badge">0</span>
+                  {{result.name}}</button><span class="badge"><button ng-click="$ctrl.addUserToLocation(result)" class="btn btn-xs badge">{{result.attending}}</button></span>
                 </h4>
               </div>
               <div id="collapse{{$index}}" class="panel-collapse collapse">
