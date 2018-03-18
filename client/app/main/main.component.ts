@@ -1,8 +1,6 @@
 const angular = require('angular');
 const uiRouter = require('angular-ui-router');
 import routing from './main.routes';
-import createHistory from 'history/createBrowserHistory';
-const queryString = require('query-string');
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -17,15 +15,13 @@ export class MainController {
   isLoggedInAsync: Function;
   $state: any;
   /*@ngInject*/
-  constructor($http, Auth, $state) {
+  constructor($scope, $http, Auth, $state) {
     this.$http = $http;
     this.$state = $state;
     this.Auth = Auth;
-    this.history = createHistory();
-    this.parsed = queryString.parse(location.search);
     this.isLoggedInAsync = Auth.isLoggedIn;
-    if(this.parsed.search!= undefined)
-      this.search = this.parsed.search;
+    if(this.$state.params.searchText != undefined)
+      this.search = this.$state.params.searchText;
 
     Auth.getCurrentUser().then( x => this.user = x.email);
   }
@@ -57,16 +53,9 @@ export class MainController {
 
   searchYelp() {
 
-    if(this.parsed.search != this.search)
+    if(this.$state.params.searchText != this.search)
     {
-      // If you prefer, use a single location-like object to specify both
-      // the URL and state. This is equivalent to the example above.
-      this.history.push({
-        pathname: "/",
-        search: "?search=" + this.search
-      });
-
-      this.parsed.search = this.search;
+      this.$state.go('main', {searchText: this.search});
     }
     this.$http.get('/api/yelps/' + this.search).then(response => {
       this.searchResults = response.data.jsonBody.businesses;
@@ -102,7 +91,7 @@ export class MainController {
         });
       }
       else{
-        this.$state.go('login', {url: '/login?search'});
+        this.$state.go('login', {searchText: this.search});
 
       }
     });
