@@ -91,7 +91,7 @@ export class MainController {
         });
       }
       else{
-        this.$state.go('login', {searchText: this.search});
+        this.$state.go('login-param', {searchText: this.search});
 
       }
     });

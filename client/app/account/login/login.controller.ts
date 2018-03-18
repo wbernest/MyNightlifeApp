@@ -16,11 +16,12 @@ export default class LoginController {
   submitted = false;
   Auth;
   $state;
-
+  redirect;
   /*@ngInject*/
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
+    this.redirect = this.$state.params.searchText;
   }
 
   login(form) {
@@ -33,7 +34,10 @@ export default class LoginController {
       })
       .then(() => {
         // Logged in, redirect to home
-        this.$state.go('main');
+        if(this.redirect == undefined)
+          this.$state.go('main');
+        else
+          this.$state.go('main', {searchText: this.redirect});
       })
       .catch(err => {
         this.errors.login = err.message;
